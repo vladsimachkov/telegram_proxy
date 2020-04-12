@@ -27,3 +27,11 @@ def home(path):
     data = None if method.upper() == "GET" else request.form.to_dict()
     req = requests.request(method, url, data=data)
     return make_response(req.content, req.status_code)
+
+def handler(environ, start_response):
+    parsed_tuple = urlparse(environ['fc.request_uri'])
+    li = parsed_tuple.path.split('/')
+    global base_path
+    if not base_path:
+        base_path = "/".join(li[0:5])
+    return app(environ, start_response)

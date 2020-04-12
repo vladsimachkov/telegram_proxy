@@ -1,5 +1,3 @@
 FROM python:3.7-alpine
-COPY . /app
-WORKDIR /app
-RUN pip install -r requirements.txt
+RUN pip install flask requests gunicorn
 CMD ["gunicorn", "-w 4", "main:app"]
